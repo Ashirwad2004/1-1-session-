@@ -1,0 +1,107 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book 1:1 Session</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="./assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md mx-auto">
+        <div id="bookingCard" class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 card-animate">
+            <div class="p-6 md:p-8">
+                <h1 class="text-2xl md:text-3xl font-bold text-blue-800 text-center">Book Your 1:1 Session</h1>
+                <p class="text-gray-500 text-center mt-2">Just pay and get your private session link.</p>
+                <div class="mt-8 space-y-4">
+                    <div>
+                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full px-4 py-3 bg-gray-100 border-transparent rounded-lg focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition" placeholder="Jane Doe">
+                    </div>
+                    <div>
+                        <label for="email" class="text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" class="mt-1 block w-full px-4 py-3 bg-gray-100 border-transparent rounded-lg focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone" class="mt-1 block w-full px-4 py-3 bg-gray-100 border-transparent rounded-lg focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition" placeholder="+91 98765 43210">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Select a Time Slot</label>
+                        <div id="timeSlotsContainer" class="mt-2 space-y-4 max-h-60 overflow-y-auto pr-2"></div>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <p id="error-message" class="text-red-500 text-sm text-center mb-4 h-5"></p>
+                    <button id="paymentBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="confirmationCard" class="bg-white rounded-xl shadow-lg p-6 md:p-8 text-center transition-all duration-500 hidden">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto icon-animate">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mt-4">Booking Confirmed!</h2>
+            <p class="text-gray-600 mt-2">Your private session link has been generated. We've also sent a copy to your email.</p>
+            <div class="mt-6 bg-gray-100 p-4 rounded-lg flex items-center justify-between space-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+                <input id="sessionLinkInput" type="text" class="text-indigo-600 font-mono text-sm bg-transparent w-full truncate focus:outline-none" readonly>
+                <button id="copyLinkBtn" class="bg-indigo-500 text-white text-sm font-bold py-2 px-3 rounded-md hover:bg-indigo-600 transition">Copy</button>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">Keep this link safe. It's your private key to the session.</p>
+            <a href="#" id="joinSessionLink" class="mt-6 inline-block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                Join Session Now
+            </a>
+        </div>
+    </div>
+
+    <div id="sessionModal" class="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white w-full max-w-4xl h-[90vh] max-h-[700px] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-lg text-gray-800">1:1 Session Room</h3>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+                <div class="md:w-2/3 bg-black flex items-center justify-center flex-col p-4">
+                    <div class="w-full h-full bg-gray-900 rounded-lg flex items-center justify-center">
+                        <div class="text-center text-gray-400">
+                            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <p class="mt-2 font-semibold">Video Call Feed</p>
+                            <p class="text-sm text-gray-500">Waiting for host to join...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/3 flex flex-col border-t md:border-t-0 md:border-l bg-gray-50">
+                    <div id="chatMessages" class="flex-1 p-4 space-y-4 overflow-y-auto chat-messages">
+                        <div class="p-3 rounded-lg bg-indigo-100 text-indigo-800 self-start max-w-xs">
+                            <p class="text-sm">Welcome! The chat is now active. Feel free to send a message.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white border-t">
+                        <div class="flex space-x-2">
+                            <input type="text" id="chatInput" class="flex-1 block w-full px-4 py-2 bg-gray-100 border-transparent rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Type a message...">
+                            <button id="sendChatBtn" class="bg-indigo-600 text-white p-2 rounded-lg hover:bg-indigo-700 transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
