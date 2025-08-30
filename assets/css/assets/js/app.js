@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const options = {
             "key": "YOUR_KEY_ID",
-            "amount": 39900,
+            "amount": 399.00,
             "currency": "INR",
             "name": "1:1 Session Booking",
             "description": "Expert Consultation Session",
