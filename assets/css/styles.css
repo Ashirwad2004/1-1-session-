@@ -22,8 +22,116 @@ body {
 .card-animate { animation: fadeIn 0.7s ease-out forwards; }
 .icon-animate { animation: popIn 0.5s ease-out forwards; }
 
-/* Chat scrollbar */
-.chat-messages::-webkit-scrollbar { width: 6px; }
-.chat-messages::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-.chat-messages::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
-.chat-messages::-webkit-scrollbar-thumb:hover { background: #555; }
+/* Custom styles for the booking page */
+
+/* Card animation */
+.card-animate {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icon animation */
+.icon-animate {
+    animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Chat messages styling */
+.chat-messages {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f7fafc;
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* Form input focus effects */
+input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Button hover effects */
+button:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+}
+
+/* Modal backdrop blur */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .max-w-md {
+        max-width: 95%;
+    }
+    
+    .p-6.md\:p-8 {
+        padding: 1.5rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a202c;
+        color: #e2e8f0;
+    }
+    
+    .bg-white {
+        background-color: #2d3748;
+    }
+    
+    .text-gray-700 {
+        color: #e2e8f0;
+    }
+    
+    .bg-gray-100 {
+        background-color: #4a5568;
+    }
+}
